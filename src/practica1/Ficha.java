@@ -22,16 +22,9 @@ public class Ficha {
         return esquerra;
     }
 
-    public void setEsquerra(int esquerra) {
-        this.esquerra = esquerra;
-    }
 
     public int getDreta() {
         return dreta;
-    }
-
-    public void setDreta(int dreta) {
-        this.dreta = dreta;
     }
 
     public Ficha() {
