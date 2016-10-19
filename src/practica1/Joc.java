@@ -8,14 +8,15 @@ import java.util.Scanner;
 public class Joc {
 
     Scanner lector = new Scanner(System.in);
-    private ArrayList<Ficha> fichas = new ArrayList();
-    private ArrayList<Jugador> nomJugador = new ArrayList();
+    private ArrayList<Ficha> fichas;
+    private ArrayList<Jugador> nomJugador;
     private int jugador;
     private int turno;
     private Jugada jug = new Jugada();
-    private ArrayDeque<Ficha> fichasTablero = new ArrayDeque();
+    private ArrayDeque<Ficha> fichasTablero;
 
     public Joc() {
+        fichasTablero = new ArrayDeque();
         afegirFichas();
         crearJugadors();
         asignarFichas();
@@ -24,6 +25,7 @@ public class Joc {
     }
 
     private void afegirFichas() {
+        this.fichas  = new ArrayList();
         //Doble bucle de for per afegir les 28 fiches
         for (int i = 0; i <= 6; i++) {
             for (int j = i; j <= 6; j++) {
@@ -34,8 +36,8 @@ public class Joc {
     }
 
     private void crearJugadors() {
+        nomJugador = new ArrayList();
         //For per asignar els noms als jugadors
-        String nom;
         for (int i = 0; i < 4; i++) {
             nomJugador.add(new Jugador("Jugador" + (i + 1)));
         }

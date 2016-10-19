@@ -14,7 +14,7 @@ public class MainClass {
 //            jugadores.add(new Jugador("Jugador " + i));
 //            
 //        }
-        Joc ju = new Joc();
+          Joc ju = new Joc();
 //        ArrayList<Ficha> fich = ju.getFichas();
 //                while(fich.size() != 0) {
 //            for (int j = 0; j < 4; j++) {
