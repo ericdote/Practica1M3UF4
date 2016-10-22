@@ -13,10 +13,10 @@ public class Joc {
     private int turno;
     private ArrayDeque<Ficha> fichasTablero;
     public int jugadorTorn;
-    private Jugador jug;
     private String nom;
-    private int pasar;
-    private String guanyador;
+    private int pasar, jugador;
+    private int[] ganador;
+    private int contador, contadorInicial;
 
     public Joc() {
         fichasTablero = new ArrayDeque();
@@ -25,7 +25,7 @@ public class Joc {
         asignarFichas();
         jugadorTorn = 0;
         jugadorInicial();
-        actualitzarJoc();
+        //actualitzarJoc();
     }
 
     private void afegirFichas() {
@@ -43,7 +43,6 @@ public class Joc {
 
     private void crearJugadors() {
         nomJugador = new ArrayList();
-        //For per asignar els noms als nomJugador
         for (int i = 0; i < 4; i++) {
             nomJugador.add(new Jugador("Jugador" + (i + 1)));
         }
@@ -65,48 +64,71 @@ public class Joc {
     }
 
     private int jugadorInicial() {
+        jugador = 0;
+        int fitxa = 0;
+        contadorInicial = 0;
+
         for (Jugador j : nomJugador) {
-            if (j.getFichasJugador().contains(fichas.get(fichas.size() - 1))) {
-                jugadorTorn = nomJugador.indexOf(j);
-                nom = nomJugador.toString();
-                break;
+            for (int i = 0; i < 7; i++) {
+                if (j.getFichasJugador().get(i).getDreta() == 6
+                        && j.getFichasJugador().get(i).getEsquerra() == 6) {
+                    jugador = contadorInicial;
+                    fitxa = i;
+                    System.out.println("primer = " + jugador + " fitxa = " + fitxa);
+                    break;
+                }
             }
+            contadorInicial++;
+            fichasTablero.addFirst(j.getFichasJugador().get(fitxa));
+            j.getFichasJugador().remove(fitxa);
+
         }
-        System.out.println(jugadorTorn);
-        System.out.println(nom);
-        return jugadorTorn;
+        return (jugador + 1);
     }
 
-    public void actualitzarJoc() {
-        jug = new Jugador(nom);
-        if (jug.getFichasJugador().equals(0)) {
-            guanyador = jug.getNom(); //Esto habria que comprobarlo, ya que en principio gana el jugador que se queda sin fichas
-                                      //Per falta por saber si es correcto tener guardado al ganador por su nombre en vez de id int.
-            finalitzaJoc();
-        } else if (pasar == 4) {
-            finalitzaJoc();
-        } else {
-            jugadorTorn = (jugadorTorn + 1) % 4;
-        }
-    }
-
+//    public void actualitzarJoc() {
+//        int guanyador = -1;
+//        if (pasar == 4) {
+//            calculaGuanyador();
+//            for (Jugador j :) {
+//                if (ganador[i] < ganador[guanyador]) {
+//                    guanyador = i;
+//              finalitzaJoc();
+//                } else if (ganador[i] == ganador[guanyador]
+//                        && llistaJugadors[i].fitxesJugador.size() < llistaJugadors[guanyador].fitxesJugador.size()) {
+//                    guanyador = i;
+//                    finalitzaJoc();
+//                }
+//            }
+//        } else if (llistaJugadors[torn].fitxesJugador.size() == 0) {
+//
+//            guanyador = torn;
+//              finalitzaJoc();
+//
+//        } else {
+//            torn = (++torn) % 4;
+//        }
+//        return guanyador;
+//    }
     public int calculaGuanyador() {
-
-        //No se si usar Array o ArrayList para calcular los puntos y compararlos
         int valor = 0;
+        ganador = new int[4];
+        contador = 0;
         if (pasar == 4) {
             for (Jugador j : nomJugador) {
                 for (Ficha f : j.getFichasJugador()) {
-                    //Completar sumar valor fichas para calcular ganador en caso de todos pasar
+                    valor += f.getDreta();
+                    valor += f.getEsquerra();
+                    ganador[contador] = valor;
                 }
+                contador++;
             }
-        } 
+        }
 
         return 0;
     }
 
     public void finalitzaJoc() {
-            System.exit(0);
-        }
+        System.exit(0);
     }
-
+}
