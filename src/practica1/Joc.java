@@ -13,7 +13,7 @@ public class Joc {
     private ArrayDeque<Ficha> fichasTablero;
     public int jugadorTorn;
     private String nom;
-    private int pasar, jugador, guanyador;
+    private int pasar = 4, jugador, guanyador;
     private int contador, contadorInicial;
     
     /**
@@ -124,7 +124,7 @@ public class Joc {
                     guanyador = i;
                     finalitzaJoc();
                 } else if (calculaGuanyador(i) == calculaGuanyador(guanyador)
-                        && nomJugador.get(i).getFichasJugador().size() < nomJugador.get(guanyador).getFichasJugador().size()) {
+                        && nomJugador.get(i).fichasJugador.size() < nomJugador.get(guanyador).fichasJugador.size()) {
                     guanyador = i;
                     finalitzaJoc();
                 }
@@ -138,16 +138,22 @@ public class Joc {
         }
         return guanyador;
     }
-
+    /**
+     * Calculem de cada jugador el valor de les seves fiches
+     * @param participant es el parametere que s'envia per sapiguer quin estem calculant
+     * @return 
+     */
     public int calculaGuanyador(int participant) {
         int puntuacio = 0;
-        for (int j = 0; j < nomJugador.get(participant).fichasJugador.size(); j++) {
-            puntuacio += nomJugador.get(participant).fichasJugador.get(j).getDreta();
-            puntuacio += nomJugador.get(participant).fichasJugador.get(j).getEsquerra();
+        for (int j = 0; j < nomJugador.get(participant).getFichasJugador().size(); j++) {
+            puntuacio += nomJugador.get(participant).getFichasJugador().get(j).getDreta();
+            puntuacio += nomJugador.get(participant).getFichasJugador().get(j).getEsquerra();
         }
         return puntuacio;
     }
-
+    /**
+     * Per parar el Joc.
+     */
     public void finalitzaJoc() {
         System.exit(0);
     }
