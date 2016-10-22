@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Jugador {
 
     private String nom;
-    private ArrayList<Ficha> fichasJugador;
+    public ArrayList<Ficha> fichasJugador;
 
 
     public Jugador(String nom) {
