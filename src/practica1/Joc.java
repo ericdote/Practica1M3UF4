@@ -9,7 +9,7 @@ public class Joc {
 
     Scanner lector = new Scanner(System.in);
     private ArrayList<Ficha> fichas;
-    private ArrayList<Jugador> nomJugador;
+    public ArrayList<Jugador> nomJugador;
     private int turno;
     private ArrayDeque<Ficha> fichasTablero;
     public int jugadorTorn;
@@ -75,13 +75,12 @@ public class Joc {
                     jugador = contadorInicial;
                     fitxa = i;
                     System.out.println("primer = " + jugador + " fitxa = " + fitxa);
+                    fichasTablero.addFirst(j.getFichasJugador().get(fitxa));
+                    j.getFichasJugador().remove(fitxa);
                     break;
                 }
             }
             contadorInicial++;
-            fichasTablero.addFirst(j.getFichasJugador().get(fitxa));
-            j.getFichasJugador().remove(fitxa);
-
         }
         return (jugador + 1);
     }
