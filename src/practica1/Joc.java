@@ -10,32 +10,27 @@ public class Joc {
     Scanner lector = new Scanner(System.in);
     private ArrayList<Ficha> fichas;
     public ArrayList<Jugador> nomJugador;
-    private ArrayDeque<Ficha> fichasTablero;
-    public int jugadorTorn;
+    public ArrayDeque<Ficha> fichasTablero;
+    public int jugadorTorn, pasar = 4;
     private String nom;
-    private int pasar = 4, jugador, guanyador;
+    private int jugador, ganador;
     private int contador, contadorInicial;
-    
+
     /**
-     * Aqui ejecutamos en orden todas las tareas que se deben realizar durante todo el juego
+     * Aqui ejecutamos en orden todas las tareas que se deben realizar durante
+     * todo el juego
      */
-    public Joc() {        
+    public Joc() {
         fichasTablero = new ArrayDeque();
         afegirFichas();
         crearJugadors();
         asignarFichas();
-        for(Jugador j : nomJugador){
-            System.out.println(j.toString());
-        }
         jugadorTorn = 0;
         jugadorInicial();
-        for(Jugador j : nomJugador){
-            System.out.println(j.toString());
-        }
         actualitzarJoc();
-            System.out.println("And the WINNER IIIIIIIIIIIIIIS " + guanyador);
-        
+
     }
+
     /**
      * Crea las 28 fichas
      */
@@ -49,6 +44,7 @@ public class Joc {
         }
 
     }
+
     /**
      * Crea los 4 jugadores
      */
@@ -58,9 +54,11 @@ public class Joc {
             nomJugador.add(new Jugador("Jugador" + (i + 1)));
         }
     }
+
     /**
-     * Mitjançant un array de booleans controlem les fiches que han sigut assignades
-     * D'aquesta forma anem afegint fiches amb un Random de forma aleatoria al arrayList de cada jugador les seves fiches
+     * Mitjançant un array de booleans controlem les fiches que han sigut
+     * assignades D'aquesta forma anem afegint fiches amb un Random de forma
+     * aleatoria al arrayList de cada jugador les seves fiches
      */
     private void asignarFichas() {
         boolean[] utilitzades = new boolean[fichas.size()];
@@ -76,12 +74,16 @@ public class Joc {
             }
         }
     }
+
     /**
-     * Aqui trobem el jugador inicial mitjançant un foreach recorrem tots els jugadors
-     * Cada cop que passem per un jugador mirem totes els seves fitxes buscant quina te en els seus 2 atributis el 6,6
-     * Un cop trobat afegeix la fitxa al ArrayList fichasTablero, on guardarem les fitxes jugades, i eliminem la fitxa del arraylist del usuari
-     * Un cop fet aixo tornem el jugador que toca + 1 per donar pas al següent.
-     * @return 
+     * Aqui trobem el jugador inicial mitjançant un foreach recorrem tots els
+     * jugadors Cada cop que passem per un jugador mirem totes els seves fitxes
+     * buscant quina te en els seus 2 atributis el 6,6 Un cop trobat afegeix la
+     * fitxa al ArrayList fichasTablero, on guardarem les fitxes jugades, i
+     * eliminem la fitxa del arraylist del usuari Un cop fet aixo tornem el
+     * jugador que toca + 1 per donar pas al següent.
+     *
+     * @return
      */
     private int jugadorInicial() {
         jugador = 0;
@@ -104,53 +106,60 @@ public class Joc {
         }
         return (jugador + 1);
     }
+
     /**
-     * Per actualitzar el joc seguim un procediment el cual esta basat de 3 pautes
-     * Si els 4 jugadors han passat es fa un bucle per fer comprovacions amb els 4 jugadors
-     * es busca el guanyador, en cas de que un jugador tingui menys punts que altre, aquest guanyara
-     * si hi ha empat, es mirará la quantitat de fitxes. En cas de que el jugador simplement s'hagi quedat a 0 fitxes, guanya
-     * Si cap a passat es calcula el torn.
-     * @return 
+     * Per actualitzar el joc seguim un procediment el cual esta basat de 3
+     * pautes Si els 4 jugadors han passat es fa un bucle per fer comprovacions
+     * amb els 4 jugadors es busca el ganador, en cas de que un jugador tingui
+     * menys punts que altre, aquest guanyara si hi ha empat, es mirará la
+     * quantitat de fitxes. En cas de que el jugador simplement s'hagi quedat a
+     * 0 fitxes, guanya Si cap a passat es calcula el torn.
+     *
+     * @return
      */
     public int actualitzarJoc() {
         boolean inicial = true;
         if (pasar == 4) {
             for (int i = 0; i < 4; i++) {
-                if (inicial){
-                    guanyador = i;
+                if (inicial) {
+                    ganador = i;
                     inicial = false;
-                }                    
-                if (calculaGuanyador(i) < calculaGuanyador(guanyador)) {
-                    guanyador = i;
+                }
+                if (calculaGuanyador(i) < calculaGuanyador(ganador)) {
+                    ganador = i;
                     finalitzaJoc();
-                } else if (calculaGuanyador(i) == calculaGuanyador(guanyador)
-                        && nomJugador.get(i).fichasJugador.size() < nomJugador.get(guanyador).fichasJugador.size()) {
-                    guanyador = i;
+                } else if (calculaGuanyador(i) == calculaGuanyador(ganador)
+                        && nomJugador.get(i).fichasJugador.size() < nomJugador.get(ganador).fichasJugador.size()) {
+                    ganador = i;
                     finalitzaJoc();
                 }
             }
         } else if (nomJugador.get(jugadorTorn).fichasJugador.size() == 0) {
-            guanyador = jugadorTorn;
+            ganador = jugadorTorn;
             finalitzaJoc();
 
         } else {
             jugadorTorn = (++jugadorTorn) % 4;
         }
-        return guanyador;
+        return ganador;
     }
+
     /**
      * Calculem de cada jugador el valor de les seves fiches
-     * @param participant es el parametere que s'envia per sapiguer quin estem calculant
-     * @return 
+     *
+     * @param participant es el parametere que s'envia per sapiguer quin estem
+     * calculant
+     * @return
      */
     public int calculaGuanyador(int participant) {
-        int puntuacio = 0;
+        int puntuacion = 0;
         for (int j = 0; j < nomJugador.get(participant).getFichasJugador().size(); j++) {
-            puntuacio += nomJugador.get(participant).getFichasJugador().get(j).getDreta();
-            puntuacio += nomJugador.get(participant).getFichasJugador().get(j).getEsquerra();
+            puntuacion += nomJugador.get(participant).getFichasJugador().get(j).getDreta();
+            puntuacion += nomJugador.get(participant).getFichasJugador().get(j).getEsquerra();
         }
-        return puntuacio;
+        return puntuacion;
     }
+
     /**
      * Per parar el Joc.
      */

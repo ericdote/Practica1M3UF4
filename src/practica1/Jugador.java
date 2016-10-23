@@ -27,29 +27,4 @@ public class Jugador {
     public void añadirFicha(Ficha f){
         this.fichasJugador.add(f);
     }
-
-    
-    
-//    public boolean trobarFichaIncial(){
-//        boolean trobat = false;
-//        for (Ficha f : fichasJugador) {
-//            if (f.getDreta() == 6 && f.getEsquerra() == 6){
-//                trobat = true;
-//                break;
-//            }
-//        }        
-//        return trobat;
-//    }
-    
-    
-    @Override
-    public String toString() {
-        return "Jugador{" + "nom=" + nom + ", fichasJugador=" + fichasJugador + '}';
-    }
-
-
- 
-
-    
-
 }
